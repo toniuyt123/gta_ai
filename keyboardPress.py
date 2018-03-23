@@ -17,7 +17,12 @@ MAPVK_VK_TO_VSC = 0
 
 # msdn.microsoft.com/en-us/library/dd375731
 VK_TAB  = 0x09
-VK_MENU = 0x12
+VK_SPACE = 0x20
+
+KEY_A = 0x41
+KEY_D = 0x44
+KEY_S = 0x53
+KEY_W = 0x57
 
 # C struct definitions
 
@@ -80,10 +85,20 @@ def PressKey(hexKeyCode):
               ki=KEYBDINPUT(wVk=hexKeyCode))
     user32.SendInput(1, ctypes.byref(x), ctypes.sizeof(x))
 
-def
-
- ReleaseKey(hexKeyCode):
+def ReleaseKey(hexKeyCode):
     x = INPUT(type=INPUT_KEYBOARD,
               ki=KEYBDINPUT(wVk=hexKeyCode,
                             dwFlags=KEYEVENTF_KEYUP))
     user32.SendInput(1, ctypes.byref(x), ctypes.sizeof(x))
+
+# keyPressTime - the ammount of time the key 
+# should be pressed down in milliseconds 
+# if its zero it will be held down forever
+def TimedKeyPress(keyCode, keyPressTime):
+    if keyPressTime > 0:
+        PressKey(keyCode)
+    else:
+        PressKey(keyCode)
+        time.sleep(keyPressTime)
+        ReleaseKey(keyCode)
+    
