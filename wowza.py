@@ -3,10 +3,31 @@ import numpy as np
 from PIL import ImageGrab
 import time
 
+def detect_lanes(screen):
+    grey = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(grey, 70, 130)
+    roi = [(0, 0), (0, 350), (300, 250), (500, 250), (800, 350), (800, 0)]
+    cv2.fillPoly(edges, [np.array(roi)], 0)
+    #edges = cv2.line(edges,(0,0),(800,600),(0,255,0),5)
+    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=20, maxLineGap=50)
+    edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+    try:
+        for x1,y1,x2,y2 in lines[0]:
+            cv2.line(edges,(x1,y1),(x2,y2),(0,255,0),10)
+    except TypeError:
+        print("TypeError...")
+    return edges
+
 while(True): 
-    screen =  np.array(ImageGrab.grab(bbox=(0,0,800,600)))
-    cv2.imshow('window',cv2.cvtColor(screen, cv2.COLOR_BGR2RGB))
+    prevTime = time.time()
+    screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))
+    screen = detect_lanes(screen)
+    cv2.imshow('window',screen)
     
+    lap = time.time() - prevTime
+    print(lap)
+
     if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
         break
+
