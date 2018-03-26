@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from PIL import ImageGrab
 import time
-from keyboardPress import PressKey,ReleaseKey, W, A, S, D
+import keyboardPress as kp
 
 def get_lines(screen):
     grey = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
