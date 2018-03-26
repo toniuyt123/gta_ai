@@ -4,14 +4,17 @@ from PIL import ImageGrab
 import time
 from keyboardPress import PressKey,ReleaseKey, W, A, S, D
 
-def detect_lanes(screen):
+def detect_lines(screen):
     grey = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(grey, 60, 120)
-    roi = [(0, 0), (0, 400), (300, 250), (500, 250), (800, 400), (800, 0)]
+    edges = cv2.Canny(grey, 50, 50)
+    roi = [(0, 0), (0, 400), (300, 300), (500, 300), (800, 400), (800, 0)]
     cv2.fillPoly(edges, [np.array(roi)], 0)
     #cv2.fillPoly(screen, [np.array(roi)], 0)
-    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=100, maxLineGap=25)
-    edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=250, maxLineGap=20)
+
+    return lines
+
+def detect_lanes(lines):
     try:
         for line in lines:    
             for x1,y1,x2,y2 in line:
@@ -21,10 +24,6 @@ def detect_lanes(screen):
     except TypeError:
         print("TypeError...")
 
-    return edges
-
-time.sleep(5)
-PressKey(W)
 while(True): 
     prevTime = time.time()
     screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))
