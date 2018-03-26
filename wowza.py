@@ -36,7 +36,7 @@ def detect_lanes(screen):
         for line in lines:    
             for x1,y1,x2,y2 in line:
                 angle = np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
-                if(abs(angle) > 20 & abs(x1 - lane1[0][0]) > 10):
+                if(abs(angle) > 20 and abs(x1 - lane1[0][0]) > 10):
                     lane2 = line
                     cv2.line(screen,(x1,y1),(x2,y2),(0,255,0),5)
                     return None
@@ -44,6 +44,22 @@ def detect_lanes(screen):
         print("TypeError...")
 
     return lane1, lane2
+
+def determine_action(leftLine, rightLine):
+    noLeftLine = noRightLine = False
+    if leftLine[0][0] <= 400 and leftLine[0][2] <= 400
+        and rightLine[0][0] <= 400 and rightLine[0][2] <= 400:
+        noRightLine = True
+    if leftLine[0][0] >= 400 and leftLine[0][2] >= 400
+        and rightLine[0][0] >= 400 and rightLine[0][2] >= 400:
+        noLeftLine = True
+    if noLeftLine and noRightLine or 
+        not noLeftLine and not noRightLine:
+        kp.Forward()
+    elif not noLeftLine and noRightLine:
+        kp.TurnRight()
+    elif noLeftLine and not noRightLine:
+        kp.TurnLeft()
 
 while(True): 
     prevTime = time.time()
