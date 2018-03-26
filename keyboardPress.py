@@ -52,6 +52,52 @@ class Input(ctypes.Structure):
 
 # Actuals Functions
 
+def Forward():
+    PressKey(W)
+    ReleaseKey(A)
+    ReleaseKey(A)
+    ReleaseKey(S)
+
+def TurnLeft():
+    PressKey(A)
+    ReleaseKey(D)
+    ReleaseKey(W)
+    ReleaseKey(S)
+
+def TurnRight():
+    PressKey(D)
+    ReleaseKey(A)
+    ReleaseKey(W)
+    ReleaseKey(S)
+
+def Backwards():
+    PressKey(S)
+    ReleaseKey(A)
+    ReleaseKey(W)
+    ReleaseKey(D)    
+
+def FullStop():
+    ReleaseKey(D)
+    ReleaseKey(A)
+    ReleaseKey(W)
+    ReleaseKey(S)
+
+def TurnLeftF():
+    TurnLeft()
+    PressKey(W)
+    
+def TurnRightF():
+    TurnRight()
+    PressKey(W)
+
+def TurnLeftR():
+    TurnLeft()
+    PressKey(S)
+
+def TurnRightR():
+    TurnRight()
+    PressKey(S)
+
 def PressKey(hexKeyCode):
     extra = ctypes.c_ulong(0)
     ii_ = Input_I()
