@@ -6,7 +6,7 @@ import keyboardPress as kp
 
 def get_lines(screen):
     grey = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(grey, 90, 90)
+    edges = cv2.Canny(grey, 70, 70)
     roi = [(0, 0), (0, 400), (300, 300), (500, 300), (800, 400), (800, 0)]
     cv2.fillPoly(edges, [np.array(roi)], 0)
     #cv2.fillPoly(screen, [np.array(roi)], 0)
@@ -19,7 +19,7 @@ def get_lines(screen):
                 if(abs(angle) > 20):
                     cv2.line(edges,(x1,y1),(x2,y2),(0,255,0),5)
     except TypeError:
-        print("TypeError...")
+        i = 0
 
     cv2.imshow('lines',edges)
 
@@ -39,37 +39,46 @@ def detect_lanes(screen):
                 if(abs(angle) > 20 and abs(x1 - lane1[0][0]) > 10):
                     lane2 = line
                     cv2.line(screen,(x1,y1),(x2,y2),(0,255,0),5)
+                    determine_action(lane1, lane2)
                     return None
+
     except TypeError:
-        print("TypeError...")
+        determine_action([[100, 0, 200, 0]], [[500, 0, 700, 0]])
+        i = 0
 
     return lane1, lane2
 
 def determine_action(leftLine, rightLine):
-    noLeftLine = noRightLine = False
-    if (leftLine[0][0] <= 400 and leftLine[0][2] <= 400 and 
-        rightLine[0][0] <= 400 and rightLine[0][2] <= 400):
-        noRightLine = True
-    if (leftLine[0][0] >= 400 and leftLine[0][2] >= 400 and 
-        rightLine[0][0] >= 400 and rightLine[0][2] >= 400):
-        noLeftLine = True
-    if (noLeftLine and noRightLine or 
-        not noLeftLine and not noRightLine):
-        kp.Forward()
-    elif not noLeftLine and noRightLine:
-        kp.TurnRight()
-    elif noLeftLine and not noRightLine:
-        kp.TurnLeft()
+        #print(leftLine)
+        #print(rightLine)
+        noLeftLine = False
+        noRightLine = False
+        if (leftLine[0][0] <= 400 and leftLine[0][2] <= 400 and 
+            rightLine[0][0] <= 400 and rightLine[0][2] <= 400):
+            noRightLine = True
+        if (leftLine[0][0] >= 400 and leftLine[0][2] >= 400 and 
+            rightLine[0][0] >= 400 and rightLine[0][2] >= 400):
+            noLeftLine = True
+        if ((noLeftLine and noRightLine) or (not noLeftLine and not noRightLine)):
+            print("napred")
+            kp.Forward()
+        elif ((not noLeftLine) and noRightLine):
+            print("na dqsno")
+            kp.TurnRight()
+        elif noLeftLine and not noRightLine:
+            print("na lqvo")
+            kp.TurnLeft()
 
+
+time.sleep(4)
 while(True): 
     prevTime = time.time()
     screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))
     detect_lanes(screen)
     screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
     cv2.imshow('window',screen)
-    
     lap = time.time() - prevTime
-    print(lap)
+    #print(lap)
 
     if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows() 
