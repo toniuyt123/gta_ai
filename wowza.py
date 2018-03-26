@@ -47,14 +47,14 @@ def detect_lanes(screen):
 
 def determine_action(leftLine, rightLine):
     noLeftLine = noRightLine = False
-    if leftLine[0][0] <= 400 and leftLine[0][2] <= 400
-        and rightLine[0][0] <= 400 and rightLine[0][2] <= 400:
+    if (leftLine[0][0] <= 400 and leftLine[0][2] <= 400 and 
+        rightLine[0][0] <= 400 and rightLine[0][2] <= 400):
         noRightLine = True
-    if leftLine[0][0] >= 400 and leftLine[0][2] >= 400
-        and rightLine[0][0] >= 400 and rightLine[0][2] >= 400:
+    if (leftLine[0][0] >= 400 and leftLine[0][2] >= 400 and 
+        rightLine[0][0] >= 400 and rightLine[0][2] >= 400):
         noLeftLine = True
-    if noLeftLine and noRightLine or 
-        not noLeftLine and not noRightLine:
+    if (noLeftLine and noRightLine or 
+        not noLeftLine and not noRightLine):
         kp.Forward()
     elif not noLeftLine and noRightLine:
         kp.TurnRight()
