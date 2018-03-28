@@ -35,7 +35,7 @@ def detect_lanes(screen):
         cv2.line(screen,(lane1[0][0],lane1[0][1]),(lane1[0][2],lane1[0][3]),(0,255,0),5)
         for line in lines:    
             for x1,y1,x2,y2 in line:
-                angle = np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
+                angle = calc_slope(x1, y1, x2, y2)
                 if(abs(angle) > 20 and abs(x1 - lane1[0][0]) > 10):
                     lane2 = line
                     cv2.line(screen,(x1,y1),(x2,y2),(0,255,0),5)
@@ -43,34 +43,33 @@ def detect_lanes(screen):
                     return None
 
     except TypeError:
-        determine_action([[100, 0, 200, 0]], [[500, 0, 700, 0]])
+        determine_action([[100, 300, 200, 0]], [[500, 0, 700, 300]])
         i = 0
 
     return lane1, lane2
 
+def calc_slope(x1, y1, x2, y2):
+    return np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
+
 def determine_action(leftLine, rightLine):
-        #print(leftLine)
-        #print(rightLine)
-        noLeftLine = False
-        noRightLine = False
-        if (leftLine[0][0] <= 400 and leftLine[0][2] <= 400 and 
-            rightLine[0][0] <= 400 and rightLine[0][2] <= 400):
-            noRightLine = True
-        if (leftLine[0][0] >= 400 and leftLine[0][2] >= 400 and 
-            rightLine[0][0] >= 400 and rightLine[0][2] >= 400):
-            noLeftLine = True
-        if ((noLeftLine and noRightLine) or (not noLeftLine and not noRightLine)):
+        slopeLeft = calc_slope(leftLine[0][0], leftLine[0][1], leftLine[0][2], leftLine[0][3])
+        slopeRight = calc_slope(rightLine[0][0], rightLine[0][1], rightLine[0][2], rightLine[0][3])
+        print(slopeLeft)
+        print(slopeRight)
+        
+        #noRightLine = False
+        #noLeftLine = False
+        if slopeLeft < 0 and slopeRight < 0:
+            print("na dqsno")
+            kp.TurnRightF()
+        elif slopeLeft > 0 and slopeRight > 0:
+            print("na lqvo")
+            kp.TurnLeftF()
+        else:
             print("napred")
             kp.Forward()
-        elif ((not noLeftLine) and noRightLine):
-            print("na dqsno")
-            kp.TurnRight()
-        elif noLeftLine and not noRightLine:
-            print("na lqvo")
-            kp.TurnLeft()
 
-
-time.sleep(4)
+time.sleep(6)
 while(True): 
     prevTime = time.time()
     screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))

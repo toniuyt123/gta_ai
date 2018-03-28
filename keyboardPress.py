@@ -55,7 +55,7 @@ class Input(ctypes.Structure):
 def Forward():
     PressKey(W)
     ReleaseKey(A)
-    ReleaseKey(A)
+    ReleaseKey(D)
     ReleaseKey(S)
 
 def TurnLeft():
