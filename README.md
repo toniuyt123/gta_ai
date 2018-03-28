@@ -13,3 +13,13 @@ DxWind
 ```
 should be installed from here https://sourceforge.net/projects/dxwnd/?source=typ_redirect
 ```
+###Useful trivia
+Cheat codes (in cae you don't know them already)
+```
+aezakmi         -> No wanted level
+hesoyam         -> Health, money and repair car
+pleasantlywarm  -> sunny waether (bugs on foggy, rainy)
+nightprowler    -> Night time (might work better this way)
+slowitdown      -> Slower game (Debugging/Early development purposes). This one stacks!! Use speeditup to escape
+speeditup       -> Faster gameplay
+```
