@@ -12,7 +12,10 @@ def drive(screen):
         print(slopeLeft)
         print(slopeRight)
         
-        if slopeLeft < 0 and slopeRight < 0:
+        if slopeLeft == 0:
+            print("crossroad")
+            kp.TurnLeft()
+        elif slopeLeft < 0 and slopeRight < 0:
             print("turn right")
             kp.TurnRightF()
         elif slopeLeft > 0 and slopeRight > 0:
@@ -23,3 +26,28 @@ def drive(screen):
             kp.Forward()
     except TypeError:
         return None
+
+def drive2(screen):
+    lines = ip.get_lines(screen)
+    weight = 0
+
+    try:
+        for line in lines:    
+            for x1,y1,x2,y2 in line:
+                angle = ip.calc_slope(x1, y1, x2, y2)
+                if(angle < 0):
+                    weight -= 1
+                elif(angle > 0):
+                    weight += 1
+
+        print(weight)
+
+        if(abs(weight) < 6):
+            kp.Forward()
+        elif(weight > 0):
+            kp.TurnLeftF()
+        elif(weight < 0):
+            kp.TurnRightF()
+    except TypeError:
+        print("no lines man")
+    

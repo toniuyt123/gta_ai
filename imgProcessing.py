@@ -6,14 +6,14 @@ def get_lines(screen):
     edges = cv2.Canny(grey, 70, 70)
     roi = [(0, 0), (0, 400), (300, 300), (500, 300), (800, 400), (800, 0)]
     cv2.fillPoly(edges, [np.array(roi)], 0)
-    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=250, maxLineGap=20)
+    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=200, maxLineGap=25)
     edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
     try:
         for line in lines:    
             for x1,y1,x2,y2 in line:
                 angle = np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
-                if(abs(angle) > 20):
-                    cv2.line(edges,(x1,y1),(x2,y2),(0,255,0),5)
+                #if(abs(angle) > 20):
+                cv2.line(edges,(x1,y1),(x2,y2),(0,255,0),5)
     except TypeError:
         i = 0
 

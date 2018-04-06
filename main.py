@@ -8,7 +8,7 @@ time.sleep(5)
 while(True): 
     prevTime = time.time()
     screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))
-    ai.drive(screen)
+    ai.drive2(screen)
     
     screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
     cv2.imshow('window',screen)
