@@ -1,5 +1,6 @@
 import imgProcessing as ip
 import keyboardPress as kp
+import math
 
 def drive(screen):
     lanes = ip.detect_lanes(screen)
@@ -35,14 +36,15 @@ def drive2(screen):
         for line in lines:    
             for x1,y1,x2,y2 in line:
                 angle = ip.calc_slope(x1, y1, x2, y2)
-                if(angle < 0):
+                angleWeight = math.cos(angle)
+                if(angleWeight < 0):
                     weight -= 1
-                elif(angle > 0):
+                elif(angleWeight > 0):
                     weight += 1
 
         print(weight)
 
-        if(abs(weight) < 6):
+        if(abs(weight) < round(len(lines)*0.6)):
             kp.Forward()
         elif(weight > 0):
             kp.TurnLeftF()
