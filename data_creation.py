@@ -8,9 +8,9 @@ import msvcrt
 def key_to_output(key) :
     output = [0,0,0]
     
-    if 'a' == key:
+    if 97 == key[0]:
         output[0] = 1
-    elif 'd' == key:
+    elif 100 == key[0]:
         output[2] = 1
     else:
         output[1] = 1
@@ -35,11 +35,15 @@ while(True):
     screen = cv2.resize(screen, (80, 60))
     #cv2.imshow('window',screen)
 
-    key = 0
+    key = [0]
     if msvcrt.kbhit():
         key = msvcrt.getch()
         #print(key)
-    trainingData.append([screen, key_to_output(key)])
+        #print(97 == key[0])
+    
+    shit = key_to_output(key)
+    print(shit)
+    trainingData.append([screen, shit])
     
     if len(trainingData) % 1000 == 0:
         print(len(trainingData))
