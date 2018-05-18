@@ -7,7 +7,7 @@ import msvcrt
 import win32api as wapi
 import time
 
-stopped = False
+stopped = True
 
 keyList = ["\b"]
 for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456789,.'APS$/\\":
@@ -52,8 +52,8 @@ while(True):
     if not stopped:
         prevTime = time.time()
         screen =  np.array(ImageGrab.grab(bbox=(50,50,800,650)))
-        screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
-        screen = cv2.resize(screen, (80, 60))
+        screen = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
+        screen = cv2.resize(screen, (120, 90))
         #cv2.imshow('window',screen)
         print(key)
         trainingData.append([screen, key])
