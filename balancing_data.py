@@ -2,7 +2,7 @@ import numpy as np
 import random
 import cv2
 
-file_name = 'training_data.npy'
+file_name = 'data/training_data.npy'
 train_data = np.load(file_name)
 random.shuffle(train_data)
 result = []
@@ -23,14 +23,24 @@ def process_counters(counters, train_data):
 
     print(counters)
     shortest = min(counters)
-    counters = [0] * len(counters)
-    return shortest
+    #counters = [0] * len(counters)
+    return counters
 
 def balance_data(file_name, train_data):
-    global counters, result
-    counters = [0] * train_data[0][1]
-    shortest = process_counters(counters, train_data)
+    global counters
+    counters = [0] * len(train_data[0][1])
+    counters = process_counters(counters, train_data)
+    forwards = 0
+    counters[1] /= 2
     for data in train_data:
+        image = data[0]
+        choice = data[1]
+        if choice == [0,1,0,0] and forwards < counters[1]:
+            result.append([image, choice])
+            forwards += 1
+        elif choice != [0,1,0,0]:
+            result.append([image, choice])
+    '''for data in train_data:
         image = data[0]
         choice = data[1]
 
@@ -38,14 +48,13 @@ def balance_data(file_name, train_data):
         for index in indexes:
             if counters[index] < shortest:
                 counters[index] += 1
-                result.append([image, choice])
+                result.append([image, choice])'''
 
     random.shuffle(result)
 
     np.save(file_name, result)
 
 def main():
-    global file_name, train_data
     balance_data(file_name, train_data)
 
 def print_screen(screen):
@@ -53,7 +62,6 @@ def print_screen(screen):
     cv2.imshow('image', screen)
     #print(train_data[0][1])
     if cv2.waitKey(25) & 0xFF == ord('q'):
-        cv2.destroyAllWindows() 
-        break
+        cv2.destroyAllWindows()
 
-main()
+#main()
