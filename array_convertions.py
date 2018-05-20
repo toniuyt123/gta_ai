@@ -41,7 +41,9 @@ def shorten_data(file_name, train_data):
             continue
         #                A  W  D 
         result_choice = [0, 0, 0]
-        if len(indexes) == 1:
+        if indexes[0] == 3
+            result_choice[indexes[0] - 1] = 1
+        elif len(indexes) == 1:
             result_choice[indexes[0]] = 1
             
         result.append([image, result_choice])
