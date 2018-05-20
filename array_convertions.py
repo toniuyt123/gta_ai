@@ -1,7 +1,8 @@
 import numpy as np
 from balancing_data import get_indexes
 file_name = 'data/raw_training_data.npy'
-save_name = 'data/training_hot_data.npy'
+save_name_one_hot = 'data/training_hot_data.npy'
+save_name_short = 'data/training_short.npy'
 train_data = np.load(file_name)
 
 def convert_to_one_hot(file_name, train_data):
@@ -30,11 +31,25 @@ def convert_to_one_hot(file_name, train_data):
     
     np.save(file_name, result)
 
-def shorten_data():
-
+def shorten_data(file_name, train_data):
+    result = []
+    for data in train_data:
+        image = data[0]
+        choice = data[1]
+        indexes = get_indexes(choice, 1)
+        if  len(indexes) >= 2:
+            continue
+        #                A  W  D 
+        result_choice = [0, 0, 0]
+        if len(indexes) == 1:
+            result_choice[indexes[0]] = 1
+            
+        result.append([image, result_choice])
+    
+    np.save(file_name, result)  
 
 def main():
     #convert_to_one_hot(save_name, train_data)
-
+    shorten_data(save_name_short, train_data)
 
 main()
