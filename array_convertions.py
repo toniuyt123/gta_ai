@@ -4,7 +4,7 @@ file_name = 'data/raw_training_data.npy'
 save_name = 'data/training_hot_data.npy'
 train_data = np.load(file_name)
 
-def convert(file_name, train_data):
+def convert_to_one_hot(file_name, train_data):
     result = []
     for data in train_data:
         image = data[0]
@@ -30,9 +30,11 @@ def convert(file_name, train_data):
     
     np.save(file_name, result)
 
+def shorten_data():
+
 
 def main():
-    convert(save_name, train_data)
+    #convert_to_one_hot(save_name, train_data)
 
 
 main()
