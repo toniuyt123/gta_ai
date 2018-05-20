@@ -1,6 +1,6 @@
 import numpy as np
 from balancing_data import get_indexes
-file_name = 'data/raw_training_data.npy'
+file_name = 'data/training_hot_data.npy'
 save_name_one_hot = 'data/training_hot_data.npy'
 save_name_short = 'data/training_short.npy'
 train_data = np.load(file_name)
@@ -37,13 +37,13 @@ def shorten_data(file_name, train_data):
         image = data[0]
         choice = data[1]
         indexes = get_indexes(choice, 1)
-        if  len(indexes) >= 2:
+        if  len(indexes) != 1:
             continue
         #                A  W  D 
         result_choice = [0, 0, 0]
-        if indexes[0] == 3
+        if indexes[0] == 3:
             result_choice[indexes[0] - 1] = 1
-        elif len(indexes) == 1:
+        else:
             result_choice[indexes[0]] = 1
             
         result.append([image, result_choice])
