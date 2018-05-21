@@ -9,7 +9,7 @@ NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
 
 model = alexnet(WIDTH, HEIGHT, LR)
 
-train_data = np.load('data/training_hot_data.npy')
+train_data = np.load('data/training_short_balanced.npy')
 
 train = train_data[:-250]
 test = train_data[-250:]

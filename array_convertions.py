@@ -36,8 +36,13 @@ def shorten_data(file_name, train_data):
     for data in train_data:
         image = data[0]
         choice = data[1]
-        #                       A          W          D 
-        result_choice = [choice[0], choice[1], choice[3]]            
+        if choice[4] == 1:
+            result_choice = [1, 0, 0]
+        elif choice[5] == 1:
+            result_choice = [0, 0, 1]
+        else:
+            #                       A          W          D 
+            result_choice = [choice[0], choice[1], choice[3]]            
         result.append([image, result_choice])
     
     np.save(file_name, result)  
