@@ -2,8 +2,8 @@ import numpy as np
 import random
 import cv2
 
-file_name = 'data/training_short_balanced.npy'
-save_file_name = 'data/training_short_balaaaanced.npy'
+file_name = 'data/training_short_balanced1+2.npy'
+save_file_name = 'data/training_short_balanced1+2no_zeroes.npy'
 train_data = []
 result = []
 
@@ -68,4 +68,26 @@ def print_screen(screen):
     if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
 
-main()
+
+def concat_data():
+    train_data = np.load("data/training_short_balanced.npy")
+    train_data2 = np.load("data/training_short_balanced2.npy")
+    result = []
+    for data in train_data:
+        result.append([data[0], data[1]])
+    for data in train_data2:
+        result.append([data[0], data[1]])
+
+    random.shuffle(result)
+    np.save(save_file_name, result)
+
+def remove_empty():
+    train_data = np.load(file_name)
+    result = []
+    for data in train_data:
+        if data[1] != [0, 0, 0]:
+            result.append(data)
+
+    np.save(save_file_name, result)
+
+#main()

@@ -4,12 +4,12 @@ import numpy as np
 WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
-EPOCHS = 5
+EPOCHS = 8
 NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
 
 model = alexnet(WIDTH, HEIGHT, LR)
 
-train_data = np.load('data/training_short_balanced.npy')
+train_data = np.load('data/training_short_balanced1+2.npy')
 
 train = train_data[:-250]
 test = train_data[-250:]
