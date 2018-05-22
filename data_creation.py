@@ -5,7 +5,6 @@ import time
 import os
 import msvcrt
 import win32api as wapi
-import time
 
 stopped = True
 fileName = 'training_data.npy'
@@ -73,4 +72,4 @@ def main(fileName):
                 cv2.destroyAllWindows() 
                 break
 
-main(fileName)
+#main(fileName)
