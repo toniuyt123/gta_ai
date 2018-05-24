@@ -5,26 +5,26 @@ import math
 def drive(screen):
     lanes = ip.detect_lanes(screen)
     try:
-        leftLine = lanes[0]
-        rightLine = lanes[1]
+        left_line = lanes[0]
+        right_line = lanes[1]
 
-        slopeLeft = ip.calc_slope(leftLine[0][0], leftLine[0][1], leftLine[0][2], leftLine[0][3])
-        slopeRight = ip.calc_slope(rightLine[0][0], rightLine[0][1], rightLine[0][2], rightLine[0][3])
-        print(slopeLeft)
-        print(slopeRight)
+        slope_left = ip.calc_slope(left_line[0][0], left_line[0][1], left_line[0][2], left_line[0][3])
+        slope_right = ip.calc_slope(right_line[0][0], right_line[0][1], right_line[0][2], right_line[0][3])
+        print(slope_left)
+        print(slope_right)
         
-        if slopeLeft == 0:
+        if slope_left == 0:
             print("crossroad")
-            kp.TurnLeft()
-        elif slopeLeft < 0 and slopeRight < 0:
+            kp.turn_left()
+        elif slope_left < 0 and slope_right < 0:
             print("turn right")
-            kp.TurnRightF()
-        elif slopeLeft > 0 and slopeRight > 0:
+            kp.turn_right_f()
+        elif slope_left > 0 and slope_right > 0:
             print("turn left")
-            kp.TurnLeftF()
+            kp.turn_left_f()
         else:
             print("forward")
-            kp.Forward()
+            kp.forward()
     except TypeError:
         return None
 
@@ -36,20 +36,20 @@ def drive2(screen):
         for line in lines:    
             for x1,y1,x2,y2 in line:
                 angle = ip.calc_slope(x1, y1, x2, y2)
-                angleWeight = math.cos(angle)
-                if(angleWeight < 0):
+                angle_weight = math.cos(angle)
+                if(angle_weight < 0):
                     weight -= 1
-                elif(angleWeight > 0):
+                elif(angle_weight > 0):
                     weight += 1
 
         print(weight)
 
         if(abs(weight) < round(len(lines)*0.6)):
-            kp.Forward()
+            kp.forward()
         elif(weight > 0):
-            kp.TurnLeftF()
+            kp.turn_left_f()
         elif(weight < 0):
-            kp.TurnRightF()
+            kp.turn_right_r()
     except TypeError:
         print("no lines man")
-    
+

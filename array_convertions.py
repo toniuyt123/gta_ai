@@ -1,11 +1,12 @@
 import numpy as np
 from balancing_data import get_indexes
-file_name = 'data/training_hot_data.npy'
-save_name_one_hot = 'data/training_hot_data.npy'
-save_name_short = 'data/training_short.npy'
-train_data = np.load(file_name)
+import argparse
+file_path = 'data/training_hot_data.npy'
+save_path_one_hot = 'data/training_hot_data.npy'
+save_path_short = 'data/training_short.npy'
+train_data = []
 
-def convert_to_one_hot(file_name, train_data):
+def convert_to_one_hot(file_path, train_data):
     result = []
     for data in train_data:
         image = data[0]
@@ -29,9 +30,9 @@ def convert_to_one_hot(file_name, train_data):
             
         result.append([image, result_choice])
     
-    np.save(file_name, result)
+    np.save(save_path_one_hot, result)
 
-def shorten_data(file_name, train_data):
+def shorten_data(file_path, train_data):
     result = []
     for data in train_data:
         image = data[0]
@@ -45,10 +46,18 @@ def shorten_data(file_name, train_data):
             result_choice = [choice[0], choice[1], choice[3]]            
         result.append([image, result_choice])
     
-    np.save(file_name, result)  
+    np.save(file_path, result)  
 
 def main():
     #convert_to_one_hot(save_name, train_data)
-    shorten_data(save_name_short, train_data)
-
-main()
+    shorten_data(save_path_short, train_data)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Convert data used by the machine learner')
+    parser.add_argument('--save-hot', '--save-path-hot', '--sph', metavar='Save path for hot array')
+    parser.add_argument('--save-short', '--save-path-short', '--sps', metavar='Save path for short array')
+    parser.add_argument('--file', '--file-path', '--fp', metavar='File path')
+    args = parser.parse_args()
+    file_path = args.file if args.file is not None else file_path
+    save_path_one_hot = args.save_hot if args.save_hot is not None else save_path_one_hot
+    save_path_short = args.save_short if args.save_short is not None else save_path_short
+    main()
