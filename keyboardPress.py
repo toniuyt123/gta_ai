@@ -52,60 +52,60 @@ class Input(ctypes.Structure):
 
 # Actuals Functions
 
-def Forward():
-    PressKey(W)
-    ReleaseKey(A)
-    ReleaseKey(D)
-    ReleaseKey(S)
+def forward():
+    press_key(W)
+    release_key(A)
+    release_key(D)
+    release_key(S)
 
-def TurnLeft():
-    PressKey(A)
-    ReleaseKey(D)
-    ReleaseKey(W)
-    ReleaseKey(S)
+def turn_left():
+    press_key(A)
+    release_key(D)
+    release_key(W)
+    release_key(S)
 
-def TurnRight():
-    PressKey(D)
-    ReleaseKey(A)
-    ReleaseKey(W)
-    ReleaseKey(S)
+def turn_right():
+    press_key(D)
+    release_key(A)
+    release_key(W)
+    release_key(S)
 
-def Backwards():
-    PressKey(S)
-    ReleaseKey(A)
-    ReleaseKey(W)
-    ReleaseKey(D)    
+def backwards():
+    press_key(S)
+    release_key(A)
+    release_key(W)
+    release_key(D)    
 
-def FullStop():
-    ReleaseKey(D)
-    ReleaseKey(A)
-    ReleaseKey(W)
-    ReleaseKey(S)
+def full_stop():
+    release_key(D)
+    release_key(A)
+    release_key(W)
+    release_key(S)
 
-def TurnLeftF():
-    TurnLeft()
-    PressKey(W)
+def turn_left_f():
+    turn_left()
+    press_key(W)
     
-def TurnRightF():
-    TurnRight()
-    PressKey(W)
+def turn_right_f():
+    turn_right()
+    press_key(W)
 
-def TurnLeftR():
-    TurnLeft()
-    PressKey(S)
+def turn_left_r():
+    turn_left()
+    press_key(S)
 
-def TurnRightR():
-    TurnRight()
-    PressKey(S)
+def turn_right_r():
+    turn_right()
+    press_key(S)
 
-def PressKey(hexKeyCode):
+def press_key(hexKeyCode):
     extra = ctypes.c_ulong(0)
     ii_ = Input_I()
     ii_.ki = KeyBdInput(0, hexKeyCode, KEYEVENTF_SCANCODE, 0, ctypes.pointer(extra))
     x = Input(ctypes.c_ulong(INPUT_KEYBOARD), ii_)
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
-def ReleaseKey(hexKeyCode):
+def release_key(hexKeyCode):
     extra = ctypes.c_ulong(0)
     ii_ = Input_I()
     ii_.ki = KeyBdInput(0, hexKeyCode, KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP, 0, ctypes.pointer(extra))

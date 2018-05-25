@@ -5,17 +5,18 @@ import time
 import os
 import msvcrt
 import win32api as wapi
+import argparse
 
 stopped = True
-fileName = 'training_short3.npy'
+save_path = 'training_data.npy'
 
-keyList = ["\b"]
+key_list = ["\b"]
 for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456789,.'APS$/\\":
-    keyList.append(char)
+    key_list.append(char)
 
 def key_check():
     keys = []
-    for key in keyList:
+    for key in key_list:
         if wapi.GetAsyncKeyState(ord(key)):
             keys.append(key)
     return keys
@@ -38,17 +39,17 @@ def key_to_output(keys) :
         time.sleep(1)
 
     return output
-def create_file(fileName):
-    trainingData = []
-    if os.path.isfile(fileName):
+def create_file(save_path):
+    training_data = []
+    if os.path.isfile(save_path):
         print('File already exists')
-        trainingData = list(np.load(fileName))
+        training_data = list(np.load(save_path))
     else:
         print('Creating new file')
-    return trainingData
+    return training_data
 
-def main(fileName):
-    trainingData = create_file(fileName)
+def main(save_path):
+    training_data = create_file(save_path)
     time.sleep(5)
     print('Stopped press p to resume')
     while(True): 
@@ -60,10 +61,10 @@ def main(fileName):
             screen = cv2.resize(screen, (120, 90))
             #cv2.imshow('window',screen)
             print(key)
-            trainingData.append([screen, key])
-            if len(trainingData) % 1000 == 0:
-                print(len(trainingData))
-                np.save(fileName,trainingData)
+            training_data.append([screen, key])
+            if len(training_data) % 1000 == 0:
+                print(len(training_data))
+                np.save(save_path,training_data)
 
             lap = time.time() - prevTime
             #print(lap)
@@ -72,4 +73,9 @@ def main(fileName):
                 cv2.destroyAllWindows() 
                 break
 
-main(fileName)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Create the actual data')
+    parser.add_argument('--save', '--save-path', '--sp', metavar='Save path')
+    args = parser.parse_args()
+    save_path = args.save if args.save is not None else save_path
+    main(save_path)

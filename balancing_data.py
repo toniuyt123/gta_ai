@@ -1,13 +1,14 @@
 import numpy as np
 import random
 import cv2
+import argparse
 
-file_name = 'data/training_short3.npy'
-save_file_name = 'data/training_short_balanced3.npy'
-train_data = []
-result = []
+file_path = 'data/training_short_balanced1+2.npy'
+save_file_path = 'data/training_short_balanced1+2no_zeroes.npy'
+train_data = [None]
+result = [None]
 
-counters = []
+counters = [None]
 
 def get_indexes(val_list, key):
     return [i for i, j in enumerate(val_list) if j == key]
@@ -23,14 +24,12 @@ def process_counters(counters, train_data):
 
     print(counters)
     shortest = min(counters)
-    #counters = [0] * len(counters)
+    counters = [0] * len(counters)
     return shortest
 
-def balance_data(file_name, train_data):
-    global counters
+def balance_data(file_path, train_data):
     counters = [0] * len(train_data[0][1])
     shortest = process_counters(counters, train_data)
-    counters = [0] * len(train_data[0][1])
     #forwards = 0
     #counters[1] /= 2
     '''for data in train_data:
@@ -54,12 +53,12 @@ def balance_data(file_name, train_data):
 
     random.shuffle(result)
 
-    np.save(file_name, result)
+    np.save(file_path, result)
 
 def main():
-    train_data = np.load(file_name)
+    train_data = np.load(file_path)
     random.shuffle(train_data)
-    balance_data(save_file_name, train_data)
+    balance_data(save_file_path, train_data)
 
 def print_screen(screen):
     screen = cv2.resize(screen, (800, 600))
@@ -69,9 +68,9 @@ def print_screen(screen):
         cv2.destroyAllWindows()
 
 
-def concat_data():
-    train_data = np.load("data/training_short_balanced.npy")
-    train_data2 = np.load("data/training_short_balanced2.npy")
+def concat_data(file_path, second_file_path):
+    train_data = np.load(file_path)
+    train_data2 = np.load(second_file_path)
     result = []
     for data in train_data:
         result.append([data[0], data[1]])
@@ -79,15 +78,22 @@ def concat_data():
         result.append([data[0], data[1]])
 
     random.shuffle(result)
-    np.save(save_file_name, result)
+    np.save(save_file_path, result)
 
 def remove_empty():
-    train_data = np.load(file_name)
+    train_data = np.load(file_path)
     result = []
     for data in train_data:
         if data[1] != [0, 0, 0]:
             result.append(data)
 
-    np.save(save_file_name, result)
+    np.save(save_file_path, result)
 
-main()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Balance data used for training the model')
+    parser.add_argument('--save', '--save-path', '--sp', metavar='Save path')
+    parser.add_argument('--file', '--file-path', '--fp', metavar='File path')
+    args = parser.parse_args()
+    file_path = args.file if args.file is not None else file_path
+    save_file_path = args.save if args.save is not None else save_file_path
+    main()
