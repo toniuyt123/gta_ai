@@ -7,7 +7,7 @@ import msvcrt
 import win32api as wapi
 
 stopped = True
-fileName = 'training_data.npy'
+fileName = 'training_short3.npy'
 
 keyList = ["\b"]
 for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456789,.'APS$/\\":
@@ -72,4 +72,4 @@ def main(fileName):
                 cv2.destroyAllWindows() 
                 break
 
-#main(fileName)
+main(fileName)

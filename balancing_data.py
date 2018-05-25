@@ -2,8 +2,8 @@ import numpy as np
 import random
 import cv2
 
-file_name = 'data/training_short_balanced1+2.npy'
-save_file_name = 'data/training_short_balanced1+2no_zeroes.npy'
+file_name = 'data/training_short3.npy'
+save_file_name = 'data/training_short_balanced3.npy'
 train_data = []
 result = []
 
@@ -90,4 +90,4 @@ def remove_empty():
 
     np.save(save_file_name, result)
 
-#main()
+main()
