@@ -48,9 +48,27 @@ def shorten_data(file_path, train_data):
     
     np.save(file_path, result)  
 
+def short_to_one_hot(file_path, train_data):
+    result = []
+    for data in train_data:
+        image = data[0]
+        choice = data[1]
+        if choice[0] == 1:
+            result_choice = [1, 0, 0]
+        elif choice[2] == 1:
+            result_choice = [0, 0, 1]
+        else:
+            result_choice = [0, 1, 0]            
+        result.append([image, result_choice])
+    
+    np.save(file_path, result)  
+
 def main():
     #convert_to_one_hot(save_name, train_data)
-    shorten_data(save_path_short, train_data)
+    #shorten_data(save_path_short, train_data)
+    train_data = np.load(file_path)
+    short_to_one_hot(save_path_one_hot, train_data)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Convert data used by the machine learner')
     parser.add_argument('--save-hot', '--save-path-hot', '--sph', metavar='Save path for hot array')

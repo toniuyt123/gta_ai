@@ -24,12 +24,13 @@ def process_counters(counters, train_data):
 
     print(counters)
     shortest = min(counters)
-    counters = [0] * len(counters)
+    #counters = [0] * len(counters)
     return shortest
 
 def balance_data(file_path, train_data):
     counters = [0] * len(train_data[0][1])
     shortest = process_counters(counters, train_data)
+    counters = [0] * len(train_data[0][1])
     #forwards = 0
     #counters[1] /= 2
     '''for data in train_data:
@@ -43,11 +44,10 @@ def balance_data(file_path, train_data):
     for data in train_data:
         image = data[0]
         choice = data[1]
-
         indexes = get_indexes(choice, 1)
         for index in indexes:
-            #print(counters[index])
             if counters[index] < shortest:
+                #print(counters[index])
                 counters[index] += 1
                 result.append([image, choice])
 
@@ -56,9 +56,11 @@ def balance_data(file_path, train_data):
     np.save(file_path, result)
 
 def main():
-    train_data = np.load(file_path)
+    '''train_data = np.load(file_path)
     random.shuffle(train_data)
-    balance_data(save_file_path, train_data)
+    remove_empty(train_data)
+    balance_data(save_file_path, train_data)'''
+    concat_data("dawey.npy" ,"./data/training_short_balanced4.npy")
 
 def print_screen(screen):
     screen = cv2.resize(screen, (800, 600))
@@ -75,13 +77,15 @@ def concat_data(file_path, second_file_path):
     for data in train_data:
         result.append([data[0], data[1]])
     for data in train_data2:
-        result.append([data[0], data[1]])
+        try:
+            result.append([data[0], data[1]])
+        except TypeError:
+            print("damn")
 
     random.shuffle(result)
     np.save(save_file_path, result)
 
-def remove_empty():
-    train_data = np.load(file_path)
+def remove_empty(train_data):
     result = []
     for data in train_data:
         if data[1] != [0, 0, 0]:

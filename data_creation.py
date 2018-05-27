@@ -22,16 +22,16 @@ def key_check():
     return keys
 
 def key_to_output(keys) :
-    output = [0,0,0]#,0]
+    output = [0,0,0,0]
     global stopped
     if 'A' in keys:
         output[0] = 1
-    elif 'D' in keys:
-        output[2] = 1
-    elif 'W' in keys:
+    if 'D' in keys:
+        output[3] = 1
+    if 'W' in keys:
         output[1] = 1
-    '''if 'S' in keys:
-        output[2] = 1'''
+    if 'S' in keys:
+        output[2] = 1
 
     if 'P' in keys:
         stopped = not stopped

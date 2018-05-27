@@ -5,7 +5,7 @@ from PIL import ImageGrab
 import time
 import keyboardPress as kp
 import sys
-#from alexnet import alexnet
+from alexnet import alexnet
 import argparse
 
 stopped = True
@@ -13,11 +13,12 @@ WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
 EPOCHS = 8
-NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
-#model = alexnet(WIDTH, HEIGHT, LR)
-#model.load(NAME)
+NAME = './models/_wut/model_alexnet-1666.model'
+model = alexnet(WIDTH, HEIGHT, LR)
+model.load(NAME)
 fw_threshold = 0.52
-sides_threshold = 0.52
+right_threshold = 0.52
+left_threshold = 0.90
 
 def main():
     global stopped
@@ -26,7 +27,7 @@ def main():
         if 'P' in key_check():
             stopped = not stopped
             print('Stopped' if stopped else 'Resumed')
-            kp.FullStop()
+            #kp.FullStop()
             time.sleep(1)
         if not stopped:
             screen = np.array(ImageGrab.grab(bbox=(50,50,800,650)))
@@ -38,9 +39,9 @@ def main():
             
             if prediction[1] > fw_threshold:
                 kp.forward()
-            elif prediction[0] > sides_threshold:
+            elif prediction[0] > left_threshold:
                 kp.turn_left_f()
-            elif prediction[2] > sides_threshold:
+            elif prediction[2] > right_threshold:
                 kp.turn_right_f()
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -62,6 +63,6 @@ if __name__ == "__main__":
     LR = float(args.lr) if args.lr is not None else LR
     EPOCHS = int(args.epochs) if args.epochs is not None else EPOCHS
     fw_threshold = float(args.fw) if args.fw is not None else fw_threshold
-    sides_threshold = float(args.s_th) if args.s_th is not None else sides_threshold
-    NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
+    #sides_threshold = float(args.s_th) if args.s_th is not None else sides_threshold
+    NAME = './models/_wut/model_alexnet-1666.model'
     main()
