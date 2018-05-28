@@ -25,6 +25,7 @@ The code was compiled using python 3.6.
 [Tenserflow](https://www.tensorflow.org/install/) and [tflearn](http://tflearn.org/installation/) are also required as our machine learning backbone.
 
 Opencv is a must as almost 70% of the files use it in some way.
+
 Unfortinatly as of now opencv doesnt support python 3 officaly, so here is a temporary workaround.
 
 - Download the correct version from this [site](https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv)
@@ -38,7 +39,7 @@ Unfortinatly as of now opencv doesnt support python 3 officaly, so here is a tem
      ```
 - Now you should be able to import opencv without any errors
 
-### Usage
+## Usage
 First step is to collect data, which will be used for training our model.
 You can do so by running **data_creation.py**
 ```
@@ -72,6 +73,7 @@ Where
 ```
 
 You should get an output similar to this (Where the 3/4 numbers are indentical to each other)
+
 ![Counters](https://i.imgur.com/35uq6VF.png)
 
 For training the model use **train_model.py**
@@ -97,9 +99,12 @@ And run **test_model.py** with the following arguments
 '-s', '--s-th'      # Sides threshold, should be between 1 and 0
 ```
 
-The model.predict insed the code returns probabilites of each of the keys being pressed
+The model.predict method inside the code returns probabilites of each of the keys being pressed
+
+So we need the threshold to determine when we are sure we need to simulate a keypress
 
 
+## Misc
 ### Useful cheat codes
 Cheat codes(ingame) for ease of debugging
 ```
@@ -112,4 +117,6 @@ speeditup       -> Faster gameplay
 ```
 
 ### Models and data
+Here are some pretrained models and prerecorded data
+
 https://drive.google.com/open?id=1zgaTgFHkm-igtfkfF7bzOvt-9JKi8e4A
