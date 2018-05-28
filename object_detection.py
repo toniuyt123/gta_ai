@@ -120,7 +120,7 @@ def load_image_into_numpy_array(image):
 # image2.jpg
 # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
 PATH_TO_TEST_IMAGES_DIR = 'object_detection/test_images'
-TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 4) ]
+TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(4, 5) ]
 
 # Size, in inches, of the output images.
 IMAGE_SIZE = (12, 8)
@@ -183,6 +183,7 @@ for image_path in TEST_IMAGE_PATHS:
   image = Image.open(image_path)
   image_np = load_image_into_numpy_array(image)
   #image_np = np.array(ImageGrab.grab(bbox=(50,50,800,650)))
+  image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
   # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
   image_np_expanded = np.expand_dims(image_np, axis=0)
   # Actual detection.
@@ -200,11 +201,12 @@ for image_path in TEST_IMAGE_PATHS:
   cv2.imshow("detected_objects", image_np)
 
   if output_dict['detection_classes'][0] == 3: #is car
-    print(output_dict['detection_boxes'][0])
+    print("car at: {}".format(output_dict['detection_boxes'][0]))
 
   lap = time.time() - prev_time
-  print(lap)
+  #print(lap)
 
-  if cv2.waitKey(25) & 0xFF == ord('q'):
-        cv2.destroyAllWindows() 
-        break
+  while True:
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+          cv2.destroyAllWindows() 
+          break

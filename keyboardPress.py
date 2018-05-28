@@ -101,7 +101,7 @@ def turn_right_r():
 def press_key(hexKeyCode):
     extra = ctypes.c_ulong(0)
     ii_ = Input_I()
-    ii_.ki = KeyBdInput(0, hexKeyCode, KEYEVENTF_SCANCODE, 0, ctypes.pointer(extra))
+    ii_.ki = KeyBdInput(0, hexKeyCode,  KEYEVENTF_SCANCODE, 0, ctypes.pointer(extra))
     x = Input(ctypes.c_ulong(INPUT_KEYBOARD), ii_)
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 

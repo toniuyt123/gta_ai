@@ -16,8 +16,8 @@ EPOCHS = 8
 NAME = './models/_wut/model_alexnet-1666.model'
 model = alexnet(WIDTH, HEIGHT, LR)
 model.load(NAME)
-fw_threshold = 0.52
-right_threshold = 0.52
+fw_threshold = 0.42
+right_threshold = 0.30
 left_threshold = 0.90
 
 def main():
@@ -27,7 +27,7 @@ def main():
         if 'P' in key_check():
             stopped = not stopped
             print('Stopped' if stopped else 'Resumed')
-            #kp.FullStop()
+            kp.full_stop()
             time.sleep(1)
         if not stopped:
             screen = np.array(ImageGrab.grab(bbox=(50,50,800,650)))
@@ -64,5 +64,5 @@ if __name__ == "__main__":
     EPOCHS = int(args.epochs) if args.epochs is not None else EPOCHS
     fw_threshold = float(args.fw) if args.fw is not None else fw_threshold
     #sides_threshold = float(args.s_th) if args.s_th is not None else sides_threshold
-    NAME = './models/_wut/model_alexnet-1666.model'
+    NAME = './models/gtasa-drive-0.001-8-100k2.model'
     main()
