@@ -1,10 +1,10 @@
 # GTA AI
 
-School project: Making an AI that drives a car in GTA Vice City (Possible to apply to other similar games)
+School project: Making an AI that drives a car in GTA San Andreas (Possible to apply to other similar games)
 
 Using python with OpenCV and tenserflow as our machine learning backbone.
 
-## Instalation
+## Installation
 ### Prerequisites
 **[DxWind](https://sourceforge.net/projects/dxwnd/?source=typ_redirect)**
 
