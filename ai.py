@@ -1,7 +1,8 @@
 import imgProcessing as ip
 import keyboardPress as kp
 import math
-import object_detection as od
+import car_detection as cd
+import cv2
 
 def drive(screen):
     lanes = ip.detect_lanes(screen)
@@ -55,24 +56,30 @@ def drive2(screen):
         print("no lines man")
 
 def drive3(screen, model, WIDTH, HEIGHT, fw_threshold=50, left_threshold=50, right_threshold=50):
-    car_bboxes = od.get_object(screen)
+    car_bboxes = cd.get_object(screen)
     collision_warning = False
     for car_bbox in car_bboxes:
         if length_of_bounding_box(car_bbox, WIDTH) >= (WIDTH * 0.35):
             mid_point_x = mid_point(car_bbox)[0]
             if mid_point_x > 0.33 and mid_point_x < 0.66:
+                screen = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
+                screen = cv2.resize(screen, (WIDTH, HEIGHT))
                 prediction = model.predict([screen.reshape(WIDTH, HEIGHT, 1)])[0]
                 print(prediction)
                 collision_warning = True
-                if prediction[1] > fw_threshold:
+                '''if prediction[1] > fw_threshold:
                     kp.forward()
                 elif prediction[0] > left_threshold:
                     kp.turn_left_f()
                 elif prediction[2] > right_threshold:
-                    kp.turn_right_f()
+                    kp.turn_right_f()'''
+
+                print("yolo")
                 break
+            
     if not collision_warning:
-        drive2(screen)
+        print("not yolo")
+        #drive2(screen)
         
 
 def length_of_bounding_box(bbox, WIDTH):
