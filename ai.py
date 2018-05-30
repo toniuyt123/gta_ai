@@ -1,6 +1,7 @@
 import imgProcessing as ip
 import keyboardPress as kp
 import math
+import object_detection as od
 
 def drive(screen):
     lanes = ip.detect_lanes(screen)
@@ -53,3 +54,29 @@ def drive2(screen):
     except TypeError:
         print("no lines man")
 
+def drive3(screen, model, WIDTH, HEIGHT, fw_threshold=50, left_threshold=50, right_threshold=50):
+    car_bboxes = od.get_object(screen)
+    collision_warning = False
+    for car_bbox in car_bboxes:
+        if length_of_bounding_box(car_bbox, WIDTH) >= (WIDTH * 0.35):
+            mid_point_x = mid_point(car_bbox)[0]
+            if mid_point_x > 0.33 and mid_point_x < 0.66:
+                prediction = model.predict([screen.reshape(WIDTH, HEIGHT, 1)])[0]
+                print(prediction)
+                collision_warning = True
+                if prediction[1] > fw_threshold:
+                    kp.forward()
+                elif prediction[0] > left_threshold:
+                    kp.turn_left_f()
+                elif prediction[2] > right_threshold:
+                    kp.turn_right_f()
+                break
+    if not collision_warning:
+        drive2(screen)
+        
+
+def length_of_bounding_box(bbox, WIDTH):
+    return bbox[3]*WIDTH - bbox[1]*WIDTH
+
+def mid_point(bbox):
+    return [(bbox[3] + bbox[1]) / 2, (bbox[2] + bbox[0]) / 2]

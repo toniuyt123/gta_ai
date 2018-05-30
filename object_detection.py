@@ -176,16 +176,15 @@ def run_inference_for_single_image(image, graph):
 
 
 # In[44]:
-
-#while True:
-for image_path in TEST_IMAGE_PATHS:
-  prev_time = time.time()
-  image = Image.open(image_path)
-  image_np = load_image_into_numpy_array(image)
-  #image_np = np.array(ImageGrab.grab(bbox=(50,50,800,650)))
+def get_object(screen):
+  #while True:
+  #for image_path in TEST_IMAGE_PATHS:
+  #image = Image.open(image_path)
+  #image_np = load_image_into_numpy_array(image)
+  image_np = screen
   image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
   # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-  image_np_expanded = np.expand_dims(image_np, axis=0)
+  #image_np_expanded = np.expand_dims(image_np, axis=0)
   # Actual detection.
   output_dict = run_inference_for_single_image(image_np, detection_graph)
   # Visualization of the results of a detection.
@@ -198,15 +197,11 @@ for image_path in TEST_IMAGE_PATHS:
       instance_masks=output_dict.get('detection_masks'),
       use_normalized_coordinates=True,
       line_thickness=8)
-  cv2.imshow("detected_objects", image_np)
+  #cv2.imshow("detected_objects", image_np)
+  result = []
+  for i, dc in enumerate(output_dict['detection_classes']):
+    if dc == 3:
+      if output_dict['detection_scores'][i] > 0.5:
+        result.append(output_dict['detection_boxes'][i])
 
-  if output_dict['detection_classes'][0] == 3: #is car
-    print("car at: {}".format(output_dict['detection_boxes'][0]))
-
-  lap = time.time() - prev_time
-  #print(lap)
-
-  while True:
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-          cv2.destroyAllWindows() 
-          break
+  return result

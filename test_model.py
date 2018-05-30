@@ -13,7 +13,7 @@ WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
 EPOCHS = 8
-NAME = './models/_wut/model_alexnet-1666.model'
+NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
 model = alexnet(WIDTH, HEIGHT, LR)
 model.load(NAME)
 fw_threshold = 0.42
