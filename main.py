@@ -11,7 +11,7 @@ while(True):
     #ai.drive2(screen)
     
     screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
-    cv2.imshow('window',screen)
+    #cv2.imshow('window',screen)
 
     lap = time.time() - prev_time
     print(lap)

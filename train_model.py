@@ -6,11 +6,11 @@ WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
 EPOCHS = 8
-NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
+NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
 
 model = alexnet(WIDTH, HEIGHT, LR)
 
-save_path = 'data/training_short_balanced1+2.npy'
+save_path = 'data/polished1-4.npy'
 
 def main():
     train_data = np.load(save_path)
@@ -44,5 +44,5 @@ if __name__ == "__main__":
     LR = float(args.lr) if args.lr is not None else LR
     EPOCHS = int(args.epochs) if args.epochs is not None else EPOCHS
     save_path = args.save if args.save is not None else save_path
-    NAME = 'gtasa-drive-{}-{}.model'.format(LR, EPOCHS)
+    NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
     main()

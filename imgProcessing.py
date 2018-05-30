@@ -3,10 +3,11 @@ import numpy as np
 
 def get_lines(screen):
     grey = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(grey, 70, 70)
+    edges = cv2.Canny(grey, 100, 100)
     roi = [(0, 0), (0, 400), (300, 300), (500, 300), (800, 400), (800, 0)]
     cv2.fillPoly(edges, [np.array(roi)], 0)
-    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=200, maxLineGap=25)
+    cv2.imshow('canny',edges)
+    lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=10, minLineLength=200, maxLineGap=17)
     edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
     try:
         for line in lines:    
