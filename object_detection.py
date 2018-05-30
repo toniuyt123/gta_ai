@@ -182,7 +182,7 @@ def get_object(screen):
   #image = Image.open(image_path)
   #image_np = load_image_into_numpy_array(image)
   image_np = screen
-  image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+  #image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
   # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
   #image_np_expanded = np.expand_dims(image_np, axis=0)
   # Actual detection.
