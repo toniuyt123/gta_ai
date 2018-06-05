@@ -79,7 +79,7 @@ def drive3(screen, model, WIDTH, HEIGHT, fw_threshold=50, left_threshold=50, rig
             
     if not collision_warning:
         print("not yolo")
-        #drive2(screen)
+        drive2(screen)
         
 
 def length_of_bounding_box(bbox, WIDTH):
