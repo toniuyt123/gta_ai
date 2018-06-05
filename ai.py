@@ -67,12 +67,12 @@ def drive3(screen, model, WIDTH, HEIGHT, fw_threshold=50, left_threshold=50, rig
                 prediction = model.predict([screen.reshape(WIDTH, HEIGHT, 1)])[0]
                 print(prediction)
                 collision_warning = True
-                '''if prediction[1] > fw_threshold:
+                if prediction[1] > fw_threshold:
                     kp.forward()
                 elif prediction[0] > left_threshold:
                     kp.turn_left_f()
                 elif prediction[2] > right_threshold:
-                    kp.turn_right_f()'''
+                    kp.turn_right_f()
 
                 print("yolo")
                 break
