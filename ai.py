@@ -13,14 +13,14 @@ def drive(screen):
         slope_left = ip.calc_slope(left_line[0][0], left_line[0][1], left_line[0][2], left_line[0][3])
         slope_right = ip.calc_slope(right_line[0][0], right_line[0][1], right_line[0][2], right_line[0][3])
 
-        cv2.line(screen,(left_line[0][0],left_line[0][1]),(left_line[0][2],left_line[0][3]),(0,255,0),5)
-        cv2.line(screen,(right_line[0][0],right_line[0][1]),(right_line[0][2],right_line[0][3]),(0,255,0),5)
-        cv2.imshow('lines',screen)
+        #cv2.line(screen,(left_line[0][0],left_line[0][1]),(left_line[0][2],left_line[0][3]),(0,255,0),5)
+        #cv2.line(screen,(right_line[0][0],right_line[0][1]),(right_line[0][2],right_line[0][3]),(0,255,0),5)
+        #cv2.imshow('lines',screen)
         #print(slope_left)
         #print(slope_right)
         
         if slope_left == 0:
-            #print("crossroad")
+            print("crossroad")
             kp.turn_left()
         elif slope_left < 0 and slope_right < 0:
             print("turn right")
