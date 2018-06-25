@@ -41,7 +41,7 @@ def balance_data(file_path, train_data):
             forwards += 1
         elif choice != [0,1,0,0]:
             result.append([image, choice])'''
-    '''for data in train_data:
+    for data in train_data:
         image = data[0]
         choice = data[1]
         indexes = get_indexes(choice, 1)
@@ -53,7 +53,7 @@ def balance_data(file_path, train_data):
 
     random.shuffle(result)
 
-    np.save(file_path, result)'''
+    np.save(file_path, result)
 
 def main():
     train_data = np.load(file_path)
