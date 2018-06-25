@@ -12,13 +12,13 @@ stopped = True
 WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
-EPOCHS = 8
-NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
+EPOCHS = 9
+NAME = './models/gtasa-drive-{}-{}-video.model'.format(LR, EPOCHS)
 model = alexnet(WIDTH, HEIGHT, LR)
 model.load(NAME)
 fw_threshold = 0.42
 right_threshold = 0.30
-left_threshold = 0.90
+left_threshold = 0.97
 
 def main():
     global stopped
@@ -39,9 +39,9 @@ def main():
             
             if prediction[1] > fw_threshold:
                 kp.forward()
-            elif prediction[0] > left_threshold:
+            elif prediction[2] > left_threshold:
                 kp.turn_left_f()
-            elif prediction[2] > right_threshold:
+            elif prediction[0] > right_threshold:
                 kp.turn_right_f()
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -64,5 +64,5 @@ if __name__ == "__main__":
     EPOCHS = int(args.epochs) if args.epochs is not None else EPOCHS
     fw_threshold = float(args.fw) if args.fw is not None else fw_threshold
     #sides_threshold = float(args.s_th) if args.s_th is not None else sides_threshold
-    NAME = './models/gtasa-drive-0.001-8-100k2.model'
+    NAME = './models/gtasa-drive-0.001-9-video.model'
     main()

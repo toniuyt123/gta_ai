@@ -6,7 +6,7 @@ WIDTH = 120
 HEIGHT = 90
 LR = 1e-3
 EPOCHS = 8
-NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
+NAME = 'gtasa-drive-{}-{}-video.model'.format(LR, EPOCHS)
 
 model = alexnet(WIDTH, HEIGHT, LR)
 
@@ -44,5 +44,5 @@ if __name__ == "__main__":
     LR = float(args.lr) if args.lr is not None else LR
     EPOCHS = int(args.epochs) if args.epochs is not None else EPOCHS
     save_path = args.save if args.save is not None else save_path
-    NAME = 'gtasa-drive-{}-{}-100k2.model'.format(LR, EPOCHS)
+    NAME = 'gtasa-drive-{}-{}-kek.model'.format(LR, EPOCHS)
     main()
